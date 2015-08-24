@@ -11,10 +11,6 @@ var opts = {
   },
   coap: {
     port: 3000 // udp
-  },
-  persistence: {
-    type: 'level',
-    path: './db'
   }
 };
 
