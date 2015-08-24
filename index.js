@@ -1,45 +1,31 @@
-var mosca = require('mosca')
-
-//1883
-var settings = {
-    port: 3000
+var ponte = require("ponte");
+var opts = {
+  logger: {
+    level: 'info'
+  },
+  http: {
+    port: 3000 // tcp
+  },
+  mqtt: {
+    port: 3001 // tcp
+  },
+  coap: {
+    port: 3000 // udp
+  },
+  persistence: {
+    type: 'level',
+    path: './db'
+  }
 };
+var server = ponte(opts);
 
-//here we start mosca
-var server = new mosca.Server(settings);
-server.on('ready', setup);
-
-// fired when the mqtt server is ready
-function setup() {
-  console.log('Mosca server is up and running')
-}
-
-// fired whena  client is connected
-server.on('clientConnected', function(client) {
-  console.log('client connected', client.id);
+server.on("updated", function(resource, buffer) {
+  console.log("Resource Updated", resource, buffer);
 });
 
-// fired when a message is received
-server.on('published', function(packet, client) {
-  console.log('Published MIO: ', packet.payload);
-});
-
-// fired when a client subscribes to a topic
-server.on('subscribed', function(topic, client) {
-  console.log('subscribed : ', topic);
-});
-
-// fired when a client subscribes to a topic
-server.on('unsubscribed', function(topic, client) {
-  console.log('unsubscribed : ', topic);
-});
-
-// fired when a client is disconnecting
-server.on('clientDisconnecting', function(client) {
-  console.log('clientDisconnecting : ', client.id);
-});
-
-// fired when a client is disconnected
-server.on('clientDisconnected', function(client) {
-  console.log('clientDisconnected : ', client.id);
-});
+// Stop the server after 1 minute
+setTimeout(function() {
+  server.close(function() {
+    console.log("server stopped");
+  });
+}, 60 * 1000);
