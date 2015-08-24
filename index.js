@@ -1,20 +1,27 @@
-var mosca = require('mosca');
-
-var settings = {
-  port: process.env.PORT || 1883,
-};
-
-var server = new mosca.Server(settings, function() {
-  console.log('Mosca server is up and running')
-});
-
-var message = {
-  topic: '/hello/world',
-  payload: 'abcde', // or a Buffer
-  qos: 0, // 0, 1, or 2
-  retain: false // or true
-};
-
-server.publish(message, function() {
-  console.log('done!');
-});
+var mosca = require('mosca')
+   
+ var moscaSettings = {
+   port: process.env.PORT || 1883,
+ http: {
+     port: 5000,
+     bundle: true,
+     static: './'
+   }
+ };
+ 
+ var server = new mosca.Server(moscaSettings);
+ server.on('ready', setup);
+ 
+ server.on('clientConnected', function(client) {
+     console.log('client connected', client.id);     
+ });
+ 
+ // fired when a message is received
+ server.on('published', function(packet, client) {
+   console.log('Published', packet.payload);
+ });
+ 
+ // fired when the mqtt server is ready
+ function setup() {
+   console.log('Mosca server is up and running')
+ }
