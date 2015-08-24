@@ -1,7 +1,7 @@
-var mosca = require('mosca')
+var mosca = require('mosca');
    
- var moscaSettings = {
-   port: process.env.PORT || 1883,
+var moscaSettings = {
+port: 1883,
  http: {
      port: 5000,
      bundle: true,
