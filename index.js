@@ -1,9 +1,7 @@
 var mosca = require('mosca');
 
 var settings = {
-  port: process.env.PORT,
-  static: './',
-  persistence: mosca.persistence.Memory
+  port: process.env.PORT || 1883,
 };
 
 var server = new mosca.Server(settings, function() {
