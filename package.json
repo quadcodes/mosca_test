@@ -1,0 +1,11 @@
+{
+  "name": "mqttapp",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Mandar Shirke",
+  "license": "MIT",
+  "dependencies": {
+    "mosca": "0.31.1"
+  }
+}
