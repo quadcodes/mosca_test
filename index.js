@@ -17,6 +17,7 @@ var opts = {
     path: './db'
   }
 };
+
 var server = ponte(opts);
 
 server.on("updated", function(resource, buffer) {
