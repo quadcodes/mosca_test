@@ -4,7 +4,7 @@ var opts = {
     level: 'info'
   },
   http: {
-    port: 3000 // tcp
+    port: 3002 // tcp
   },
   mqtt: {
     port: 3001 // tcp
