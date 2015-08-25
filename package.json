@@ -9,6 +9,6 @@
   "author": "Mandar Shirke",
   "license": "MIT",
   "dependencies": {
-    "ponte": "0.0.14"
+    "mosca": "0.31.1"
   }
 }
