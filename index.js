@@ -1,28 +1,27 @@
-var ponte = require("ponte");
-var opts = {
-  logger: {
-    level: 'info'
-  },
-  http: {
-    port: 3002 // tcp
-  },
-  mqtt: {
-    port: 3001 // tcp
-  },
-  coap: {
-    port: 3000 // udp
-  }
+var mosca = require('mosca')
+ 
+var settings = {
+  port: 1883,
+  persistence: mosca.persistence.Memory
 };
-
-var server = ponte(opts);
-
-server.on("updated", function(resource, buffer) {
-  console.log("Resource Updated", resource, buffer);
+ 
+var server = new mosca.Server(settings, function() {
+  console.log('Mosca server is up and running')
 });
-
-// Stop the server after 1 minute
-setTimeout(function() {
-  server.close(function() {
-    console.log("server stopped");
-  });
-}, 60 * 1000);
+ 
+server.published = function(packet, client, cb) {
+  if (packet.topic.indexOf('echo') === 0) {
+    return cb();
+  }
+ 
+  var newPacket = {
+    topic: 'echo/' + packet.topic,
+    payload: packet.payload,
+    retain: packet.retain,
+    qos: packet.qos
+  };
+ 
+  console.log('newPacket', newPacket);
+  
+  server.publish(newPacket, cb);
+}
