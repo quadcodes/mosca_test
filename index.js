@@ -1,12 +1,14 @@
 var mosca = require('mosca')
+var port= process.env.PORT || 1883;
  
 var settings = {
-  port: process.env.PORT || 1883,
+  port: port,
   persistence: mosca.persistence.Memory
 };
  
 var server = new mosca.Server(settings, function() {
-  console.log('Mosca server is up and running')
+  console.log('Mosca server is up and running');
+  console.log('listening on:' + port);
 });
  
 server.published = function(packet, client, cb) {
@@ -25,3 +27,4 @@ server.published = function(packet, client, cb) {
   
   server.publish(newPacket, cb);
 }
+
