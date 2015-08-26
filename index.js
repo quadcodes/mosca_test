@@ -1,4 +1,4 @@
-var mosca = require('mosca')
+var mosca = require('mosc')
 var port= process.env.PORT || 1883;
  
 var settings = {
