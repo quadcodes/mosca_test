@@ -7,7 +7,7 @@ var settings = {
 };
  
 var server = new mosca.Server(settings, function() {
-  console.log('Mosca server is up and running');
+  console.log('Mosca server is up and running ok');
   console.log('listening on:' + port);
 });
  
